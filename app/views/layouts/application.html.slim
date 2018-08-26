@@ -9,18 +9,35 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" rel="stylesheet"
   body
-    nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+    /nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
       .container
         .navbar-header
           = link_to  "Checklist", root_path, class: "navbar-brand"
-        .navbar-text.navbar-link.navbar-right
+        .navbar-right
           -if user_signed_in?
-            = link_to  "New item", new_item_path
+            = link_to  "New item", new_item_path, class: "nav-item nav-link"
           -if current_user.present?
-            = link_to  "Sign Out", destroy_user_session_path, method: :delete, class: "navbar-text navbar-link navbar-right"
+            = link_to  "Sign Out", destroy_user_session_path, method: :delete, class: "nav-item nav-link"
           -else
-            = link_to  "Log In", new_user_session_path, class: "navbar-text navbar-link navbar-right"
+            = link_to  "Log In", new_user_session_path, class: "nav-item nav-link"
+    .container
+      header
+        nav.navbar.navbar-expand-md.navbar-dark.bg-dark
+          a.navbar-brand = link_to "Checklist", root_path  
+          #navbarNavDropdown.navbar-collapse.collapse
+            -if user_signed_in?
+              ul.navbar-nav.mr-auto
+                li.nav-item.active = link_to 'New item', new_item_path, :class => "nav-link"
+            ul.navbar-nav
+              li.nav-item
+                -if current_user.present?
+                  = link_to  "Sign Out", destroy_user_session_path, method: :delete, class: "nav-item nav-link"
+                -else
+                  = link_to  "Log In", new_user_session_path, class: "nav-item nav-link"
+                        
     p.notice = notice
     p.alert = alert
     .container
       = yield
+
+
